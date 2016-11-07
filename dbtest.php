@@ -19,6 +19,17 @@ if (mysqli_connect_errno()) {
   printf("Connect failed: %s\n", mysqli_connect_error());
   exit();
 }
+
+
+$sql = "drop table students";
+
+if ($link->query($sql) === TRUE) {
+  echo "Dropping any existing table present"."<br/>";
+} else {
+  echo "No table exists " . $sql . "<br>" . $link->error;
+}
+
+
 $create_table = 'CREATE TABLE IF NOT EXISTS students
 (
   id INT NOT NULL AUTO_INCREMENT,
@@ -35,30 +46,21 @@ else {
   echo "Table creation error";
 }
 
-//delete data
-$sql = "delete FROM Students";
-
-if ($link->query($sql) === TRUE) {
-  echo "records deleted";
-} else {
-  echo "Error while deleting: " . $sql . "<br>" . $link->error;
-}
-
 //Insert data
-$sql = "INSERT INTO Students (name, age)
+$sql = "INSERT INTO students (name, age)
 VALUES ('Sindhu', 10), ('Prajee', 24), ('Sam', 22), ('Sow', 55), ('Sujju', 71)";
 
 if ($link->query($sql) === TRUE) {
-  echo "New record created successfully";
+  echo "Records inserted successfully"."<br/>";
 } else {
   echo "Error: " . $sql . "<br>" . $link->error;
 }
 
 //display records
-$link->real_query("SELECT * FROM Students");
+$link->real_query("SELECT * FROM students");
 $res = $link->use_result();
 
-echo "Result set order...\n";
+echo "<b>Contents of the table are</b>\n";
 echo "<br/>";
 echo "<table>";
 echo "<tr>";
@@ -79,7 +81,6 @@ while ($row = $res->fetch_assoc()) {
   echo $row['age'];
   echo "</td>";
   echo "</tr>";
-    //echo " id = " . $row['id'] . "\n";
 
 }
 
