@@ -8,7 +8,7 @@ echo "This script requires 5 parameters to be passed(image-id,key-name,security-
 else
 echo -e "\e[1m Lab7 Create Script With Positional Parameters"
 echo -e "Creating 3 micro instances \e[0m"
-aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --instance-type t2.micro --user-data file://installapp.sh --count $5 --placement AvailabilityZone=us-west-2a
+aws ec2 run-instances --image-id $1 --key-name $2 --security-group-ids $3 --instance-type t2.micro --user-data file://install-app.sh --count $5 --placement AvailabilityZone=us-west-2a --iam-instance-profile Name="developer"
 echo -e "New Instances are created"
 
 echo -e "\e[1mWait untill the Instance are in  Running State\e[0m"
@@ -26,7 +26,7 @@ aws elb register-instances-with-load-balancer --load-balancer-name itmo-544 --in
 echo -e "Instances are registered to load balancer successfully"
 
 echo -e "\e[1mCreating Autoscaling Launch Configuration\e[0m"
-aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1 --key-name $2 --instance-type t2.micro --user-data file://installapp.sh
+aws autoscaling create-launch-configuration --launch-configuration-name $4 --image-id $1 --key-name $2 --instance-type t2.micro --user-data file://install-app.sh
 echo -e "Autoscaling Launch Configuration created successfully"
 
 echo -e "\e[1mCreating Autoscaling Group\e[0m"
