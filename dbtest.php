@@ -26,7 +26,7 @@ $sql = "drop table students";
 if ($link->query($sql) === TRUE) {
   echo "Dropping any existing table present"."<br/>";
 } else {
-  echo "No table exists " . $sql . "<br>" . $link->error;
+  echo "No table exists to drop";
 }
 
 
@@ -39,6 +39,7 @@ $create_table = 'CREATE TABLE IF NOT EXISTS students
   )';
 $create_tbl = $link->query($create_table);
 if ($create_table) {
+  echo "<b>Creating new table</b>";
   echo "<b>Table is created successfully</b>";
   echo "</br>";
 }
