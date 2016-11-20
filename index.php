@@ -1,173 +1,123 @@
 <?php
 
 require 'vendor/autoload.php';
+
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
-  'version' => 'latest',
-  'region'  => 'us-west-2'
-  ));
+'version' => 'latest',
+'region'  => 'us-west-2'
+));
+
 $result = $client->describeDBInstances(array(
-  'DBInstanceIdentifier' => 'sreddy7',
-  ));
+    'DBInstanceIdentifier' => 'sreddy7',
+));
+
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
+
+print_r($endpoint);
+
+echo "<br/>";
+echo "<br/>";
+echo "begin database";
 $link = mysqli_connect($endpoint,"sreddy7","sreddy123","school",3306) or die("Error " . mysqli_error($link));
+
 if (mysqli_connect_errno()) {
-  printf("Connect failed: %s\n", mysqli_connect_error());
-  exit();
+    printf("mysql db Connect failed: %s\n", mysqli_connect_error());
+    exit();
 }
-$sql = "drop table loginData";
-if ($link->query($sql) === TRUE) {
- // echo "Dropping any existing table present"."<br/>";
-} else {
- // echo "No table exists to drop"."<br/>";
-}
+
 $create_table = 'CREATE TABLE IF NOT EXISTS loginData
 (
-  name VARCHAR(25) NOT NULL,
-  password VARCHAR(25) NOT NULL,
-  PRIMARY KEY(name)
-  )';
+    username VARCHAR(30) NOT NULL,
+    password VARCHAR(20) NOT NULL,
+    PRIMARY KEY(username)
+)';
 $create_tbl = $link->query($create_table);
 if ($create_table) {
- // echo "<b>Creating new table</b>"."<br/>";
- // echo "<b>Table is created successfully</b>"."<br/>";
- // echo "</br>";}
+        echo "<br/>";
+        echo "<b>Table <i>login</i> is created in school database</b>";
+        echo "</br>";
+}
 else {
-  //echo "Table creation error";
+        echo "error while creating login table!!";
 }
-//Insert data
-$sql = "INSERT INTO loginData (name, password)
-VALUES ('sreddy7@hawk.iit.edu', 'password'), ('jhajek@iit.edu','password')";
+
+//delete data
+$sql = "delete FROM loginData";
+
 if ($link->query($sql) === TRUE) {
-  //echo "Records inserted successfully"."<br/>";
+    echo "<br/>";
+    echo "Existing records deleted if present";
 } else {
-  //echo "Error: " . $sql . "<br>" . $link->error;
+    echo "Error while deleting data in the table: " . $sql . "<br>" . $link->error;
 }
 
-//$link->close();
-?>
+//Insert data
+$sql = "INSERT INTO loginData (username,password) VALUES ('sreddy7@hawk.iit.edu', 'password'), ('jhajek@iit.edu', 'password')";
 
-<?php
-
-session_start();
-
-if (isset($_GET['logout'])) {
-	session_destroy();
-	//unset($_SESSION['user']);
-	header('Location: welcome.php', TRUE, 302);
-	exit;
-}
-
-if(isset($_SESSION['user']))
-{
-	header("Location: welcome.php", TRUE, 302);
-	exit;
-}
-
-function validate($data) {
-    $data = trim($data);
-    $data = stripslashes($data);
-    $data = htmlspecialchars($data);
-    return $data;
+if ($link->query($sql) === TRUE) {
+    echo "<br/>";
+    echo "<b>2 New records inserted successfully</b>";
+} else {
+    echo "Error while inserting records into login table: " . $sql . "<br>" . $link->error;
 }
 
 
-	// Shorten Request Variables if they are set
-$username = isset($_POST['username']) ? validate($_POST['username']) : '';
-$password = isset($_POST['password']) ? validate($_POST['password']) : '';
+//move to welcome.php
+if($_SERVER["REQUEST_METHOD"] == "POST") {
+      // username and password sent from form
 
-$formIsValid = true;
-$userNameErr = '';
-$passwordErr = '';
+      $myusername = mysqli_real_escape_string($link,$_POST['username']);
+      $mypassword = mysqli_real_escape_string($link,$_POST['password']);
 
-if(empty($username)){
-	$formIsValid = false;
-	$userNameErr = "Username is required !!";
-}
+      $sql = "SELECT * FROM loginData WHERE username = '$myusername' and password = '$mypassword'";
+      $result = mysqli_query($link,$sql);
+      $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+      //$active = $row['active'];
 
-if(empty($password)){
-	$formIsValid = false;
-	$passwordErr = "Password is required !!";
-}
+     $count = mysqli_num_rows($result);
+echo $count;
+      // If result matched $myusername and $mypassword, table row must be 1 row
 
+      if($count > 0) {
 
-$valid_user = 'Sindhu';
-$valid_hash = '$2y$10$U/VDX9TnloNzBCqw3UoBMOVqkvpGbUPFiGpxFneR6RtRY1kyGQ1We';
+         $_SESSION['login_user'] = $myusername;
 
+         header("location: welcome.php");
+exit();
+      }else {
+         $error = "Your Login Credentials are invalid";
+      }
+   }
 
-
-
-
-
-
-(strtolower($username) == strtolower($valid_user) && password_verify($password, $valid_hash))
+$link->close();
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
-	<title>Login Page</title>
-	<style>
-	body {
-		color: navy !important;;
-		background-color: lightblue !important;;
-		font-family: "Comic Sans MS", cursive, sans-serif ;
-	}
-	</style>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/css/bootstrap.min.css">
+    <title>Login Page</title>
+    <style>
+    body {
+        color: navy !important;;
+        background-color: lightblue !important;;
+        font-family: "Comic Sans MS", cursive, sans-serif ;
+    }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="jumbotron">
 
-	<?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-	<?php if ($formIsValid) : ?>
-	<?php if ((strtolower($username) == strtolower($valid_user)) && (password_verify($password, $valid_hash))): ?>
-	<?php	$_SESSION['user'] = $valid_user;
-		header("Location: welcome.php", TRUE, 302);
-		exit;
-	?>
-	<?php else: ?>
-
-		<div class="container">
-			<div class="jumbotron">
-
-				<h1>Login Page</h1><br>
-				<span style="color:red"> <?php print "Username and Password are incorrect"; ?></span><br><br>	
-				<form action="index.php" method="POST">
-					<label>Username: <input type="text" name="username" value="<?php print $username; ?>" size="40"></label><br><br>
-					<label>Password: <input type="password" name="password" value="<?php print $password; ?>" size="40"></label><br><br>
-					<input type="submit" class="btn btn-primary" value="Login">
-				</form>	
-			</div>
-		</div>
-	<?php endif; ?>	
-<?php else: ?>
-	<div class="container">
-		<div class="jumbotron">
-
-			<h1>Login Page</h1><br>
-			<form action="index.php" method="POST">
-				<label>Username: <input type="text" name="username" value="<?php print $username; ?>" size="40"></label>
-				<span style="color:red"><?php print $userNameErr; ?> </span><br><br>					
-				<label>Password: <input type="password" name="password" value="<?php print $password; ?>" size="40"></label>
-				<span style="color:red"><?php print $passwordErr; ?> </span><br><br>
-				<input type="submit" class="btn btn-primary" value="Login">
-			</form>
-		</div>
-	</div>
-<?php endif; ?>
-<?php else: ?>
-	<div class="container">
-		<div class="jumbotron">
-
-			<h1>Login Page</h1><br>
-			<form action="index.php" method="POST">
-				<label>Username: <input type="text" name="username" size="40"></label><br><br>
-				<label>Password: <input type="password" name="password" size="40"></label><br><br>
-				<input type="submit" value="Login" class="btn btn-primary">
-			</form>	
-		</div>
-	</div>
-<?php endif; ?>
+            <h1>Login Page</h1><br>
+            <form action="index.php" method="POST">
+                <label>Username: <input type="text" name="username" size="40"></label><br><br>
+                <label>Password: <input type="password" name="password" size="40"></label><br><br>
+                <input type="submit" value="Login" class="btn btn-primary">
+            </form> 
+        </div>
+    </div>
 </body>
 </html>
