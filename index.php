@@ -26,6 +26,17 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
+//Drop table
+$sql = "drop table loginData";
+
+if ($link->query($sql) === TRUE) {
+    echo "<br/>";
+    echo "Dropping loginData table";
+} else {
+    echo "No table is present to drop";
+}
+
+//Create Table
 $create_table = 'CREATE TABLE IF NOT EXISTS loginData
 (
     username VARCHAR(30) NOT NULL,
@@ -42,16 +53,6 @@ else {
         echo "error while creating login table!!";
 }
 
-//delete data
-$sql = "delete FROM loginData";
-
-if ($link->query($sql) === TRUE) {
-    echo "<br/>";
-    echo "Existing records deleted if present";
-} else {
-    echo "Error while deleting data in the table: " . $sql . "<br>" . $link->error;
-}
-
 //Insert data
 $sql = "INSERT INTO loginData (username,password) VALUES ('sreddy7@hawk.iit.edu', 'password'), ('jhajek@iit.edu', 'password')";
 
@@ -60,6 +61,40 @@ if ($link->query($sql) === TRUE) {
     echo "<b>2 New records inserted successfully</b>";
 } else {
     echo "Error while inserting records into login table: " . $sql . "<br>" . $link->error;
+}
+
+//Drop table items
+$sql = "drop table items";
+
+if ($link->query($sql) === TRUE) {
+    echo "<br/>";
+    echo "Drop items table if present";
+} else {
+    echo "No table is present to drop";
+}
+
+//Create table items for further use
+$create_table_items = 'CREATE TABLE IF NOT EXISTS items
+(
+    id INT(6) AUTO_INCREMENT,
+    email VARCHAR(20),
+    phone INT(15),
+    filename VARCHAR(30),
+    s3rawurl VARCHAR(30),
+    s3finishedurl VARCHAR(30),
+    status INT(15),
+    issubscribed VARCHAR(10),
+    reciept VARCHAR(30),
+    PRIMARY KEY(id)
+)';
+$create_tbl = $link->query($create_table_items);
+if ($create_table_items) {
+        echo "<br/>";
+        echo "<b>Table items is created successfully</b>";
+        echo "</br>";
+}
+else {
+        echo "error while creating items table!!";
 }
 
 
