@@ -17,9 +17,7 @@ public class ListErrorPages{
   public static class TokenizerMapper
        extends Mapper<Object, Text, Text, NullWritable>{
 
-    //private final static IntWritable one = new IntWritable(1);
     private Text word = new Text();
-//    private NullWritable nw = new NullWritable();
     public void map(Object key, Text value, Context context
                     ) throws IOException, InterruptedException {
 	String line = value.toString();
@@ -36,7 +34,7 @@ public class ListErrorPages{
   public static void main(String[] args) throws Exception {
     Configuration conf = new Configuration();
     Job job = Job.getInstance(conf, "ip frequency");
-    job.setJarByClass(FrequentIP.class);
+    job.setJarByClass(ListErrorPages.class);
     job.setMapperClass(TokenizerMapper.class);
     job.setOutputKeyClass(Text.class);
     job.setOutputValueClass(NullWritable.class);
