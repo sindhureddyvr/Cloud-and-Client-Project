@@ -23,6 +23,10 @@ echo "Creating SNS Topic"
 
 aws sns create-topic --name sreddy7
 
+var =$(aws sns list-topics | cut -f 2)
+
+aws sns subscribe --topic-arn $var --protocol sms --notification-endpoint 1-312-561-8112
+
 echo "Creating SQS Queue"
 
 aws sqs create-queue --queue-name sreddy7
