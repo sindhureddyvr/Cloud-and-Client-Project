@@ -53,24 +53,15 @@ else {
       //  echo "error while creating login table!!";
 }
 
+
 //Insert data
-$sql = "INSERT INTO loginData (username,password) VALUES ('sreddy7@hawk.iit.edu', 'password'), ('jhajek@iit.edu', 'password')";
+$sql = "INSERT INTO loginData (username,password) VALUES ('sreddy7@hawk.iit.edu', 'password'),('controller','password'), ('jhajek@iit.edu', 'password')";
 
 if ($link->query($sql) === TRUE) {
     //echo "<br/>";
     //echo "<b>2 New records inserted successfully</b>";
 } else {
     //echo "Error while inserting records into login table: " . $sql . "<br>" . $link->error;
-}
-
-//Drop table items
-$sql = "drop table items";
-
-if ($link->query($sql) === TRUE) {
-    //echo "<br/>";
-   // echo "Drop items table if present";
-} else {
-    //echo "No table is present to drop";
 }
 
 //Create table items for further use
@@ -97,7 +88,20 @@ else {
       //  echo "error while creating items table!!";
 }
 
-
+$create_table2 = 'CREATE TABLE IF NOT EXISTS control
+(
+    upload INT,
+    id INT
+)';
+$create_tbl2 = $link->query($create_table2);
+if ($create_table2) {
+        //echo "<br/>";
+        //echo "<b>Table <i>login</i> is created in school database</b>";
+        //echo "</br>";
+}
+else {
+      //  echo "error while creating login table!!";
+}
 //move to welcome.php
 if($_SERVER["REQUEST_METHOD"] == "POST") {
       // username and password sent from form
