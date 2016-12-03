@@ -6,7 +6,7 @@ $s3 = new Aws\S3\S3Client([
     'region'  => 'us-west-2'
 ]);
 // have to hard code this here because index.php doesn't exist
-//$_SESSION['email'] = "hajek@iit.edu";
+//$_SESSION['login_user'] ;
 echo "\n" . $_SESSION['login_user'] ."<br/>";
 
 // Retrieve the POSTED file information (location, name, etc, etc)
@@ -52,7 +52,7 @@ if (mysqli_connect_errno()) {
 if (!($stmt = $link->prepare("INSERT INTO items(email, phone, s3rawurl, s3finishedurl, issubscribed,status,receipt ) VALUES (?,?,?,?,?,?,?)"))) {
     echo "Prepare failed: (" . $stmt->errno . ") " . $stmt->error;
 }
-$email=$_SESSION['email'];
+$email=$_SESSION['login_user'];
 $phone='3125618112';
 $finishedurl=' ';
 $status=0;
