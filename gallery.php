@@ -53,6 +53,9 @@ Ivdm9lj6imS/pQ==" crossorigin="anonymous"></script>
 <div class="jumbotron">
 <?php
 session_start();
+
+$username=$_SESSION['login_user'];
+//$username= mysql_real_escape_string($username);
 echo "<h2>All Images in S3 Bucket </h2>";
 require 'vendor/autoload.php';
 
@@ -77,7 +80,7 @@ if (mysqli_connect_errno()) {
     exit();
 }
 
-$link->real_query("SELECT * FROM items");
+$link->real_query("SELECT * FROM items where email='".$username."'");
 $res = $link->use_result();
 ?>
 </div>
