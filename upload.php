@@ -1,3 +1,8 @@
+<?php
+session_start();
+$username = $_SESSION['login_user'];
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,8 +26,5 @@
 <input type="file" name="userfile" />
 <input type="submit" value="submit" />
 </form>
-
-
-
 </body>
 <html>
