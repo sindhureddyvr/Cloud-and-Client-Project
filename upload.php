@@ -28,7 +28,7 @@ $username = $_SESSION['login_user'];
 </form>
 <br>
 <br>
-<a href="welcome.php" class="btn btn-primary"> Welcome</a>
+<a href="welcome.php" class="btn btn-primary"> BackToHome</a>
 <a href="index.php?logout=1" class="btn btn-primary"> Logout</a>
 </body>
 <html>
