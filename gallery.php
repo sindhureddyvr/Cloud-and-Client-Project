@@ -1,5 +1,12 @@
 <html>
 <head><title>Gallery</title>
+<style>
+body {
+		color: navy !important;;
+		background-color: lightblue !important;;
+		font-family: "Comic Sans MS", cursive, sans-serif ;
+	}
+</style>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
 <link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
@@ -105,9 +112,12 @@ if($i==4){
 </tr>
 </table>
 </div>
+<a href="welcome.php" class="btn btn-primary">Welcome</a>
+<a href="index.php?logout=1" class="btn btn-primary"> Logout</a>
 <?php
 $link->close();
 ?>
+
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
 <script src="js/bootstrap-image-gallery.min.js"></script>
