@@ -3,7 +3,7 @@
 run-one-until-success sudo apt-get update -y
 sleep 30
 echo "Installing apache2,php-xml,php,php-mysql,curl,zip,unzip,git"
-run-one-until-success sudo apt-get install -y apache2 php php-xml php-mysql curl php-curl zip unzip git libapache2-mod-php php7.0-xml php7.0-cli php-gd
+run-one-until-success sudo apt-get install -y apache2 php php-xml php-mysql mysql-client curl php-curl zip unzip git libapache2-mod-php php7.0-xml php7.0-cli php-gd
 echo "Installed apache2,php-xml,php,php-mysql,curl,zip,unzip,git"
 sleep 30
 echo "Setting the environment vairable"
@@ -31,4 +31,5 @@ sudo mv /sreddy7/uploader.php /var/www/html
 sudo mv /sreddy7/edit.php /var/www/html
 sudo mv /sreddy7/admin.php /var/www/html
 sudo mv /sreddy7/backup.php /var/www/html
+sudo mv /sreddy7/restore.php /var/www/html
 sudo mv /sreddy7/IIT-logo.png /var/www/html
