@@ -106,7 +106,7 @@ $resultimg = $s3->putObject(array(
     'ContentType' => 'image.png'
 ));
 
-$s3finurl= $resultimg['ObjectURL'] . "<br>";
+$s3finurl= $resultimg['ObjectURL'];
 echo $s3finurl;
 
 $link->real_query("UPDATE items SET status=1,s3finishedurl='$s3finurl' where receipt='$messageBody'");
