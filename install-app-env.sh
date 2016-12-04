@@ -19,6 +19,8 @@ aws rds wait db-instance-available --db-instance-identifier sreddy7
 
 echo "MYSQL DB instance created"
 
+aws rds create-db-instance-read-replica --db-instance-identifier sreddy7-readreplica --source-db-instance-identifier sreddy7 
+
 echo "Creating SNS Topic"
 
 aws sns create-topic --name sreddy7
