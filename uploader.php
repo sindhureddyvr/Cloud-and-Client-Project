@@ -119,7 +119,8 @@ echo "<br/>"
   </style>
 </head>
 <body>
-<a href="upload.php"> upload </a> 
-
+<br>
+<a href="upload.php" class="btn btn-primary"> BackUpload </a>
+<a href="index.php?logout=1" class="btn btn-primary"> Logout</a>
 </body>
 </html>
