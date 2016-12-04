@@ -30,4 +30,5 @@ sudo mv /sreddy7/upload.php /var/www/html
 sudo mv /sreddy7/uploader.php /var/www/html
 sudo mv /sreddy7/edit.php /var/www/html
 sudo mv /sreddy7/admin.php /var/www/html
+sudo mv /sreddy7/backup.php /var/www/html
 sudo mv /sreddy7/IIT-logo.png /var/www/html
