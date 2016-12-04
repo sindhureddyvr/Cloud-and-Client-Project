@@ -27,7 +27,7 @@ Image Upload
 <br>
 <a href="backup.php"> BackupDB </a><br/><br/>
 
-<a href="welcome.php" class="btn btn-primary">BackHome</a>
+<a href="welcome.php" class="btn btn-primary">BackToHome</a>
 
 <a href="index.php?logout=1" class="btn btn-primary"> Logout </a>
 </body>
