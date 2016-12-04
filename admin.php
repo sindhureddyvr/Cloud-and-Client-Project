@@ -25,8 +25,10 @@ Image Upload
 </form>
 <br>
 <br>
-<a href="backup.php"> BackupDB </a>
-<br/><br/>
+<a href="backup.php"> BackupDB </a><br/><br/>
+
+<a href="welcome.php" class="btn btn-primary">BackHome</a>
+
 <a href="index.php?logout=1" class="btn btn-primary"> Logout </a>
 </body>
 <html>
@@ -55,14 +57,17 @@ $upload_status=$_POST["upload_select_status"];
 if ( $upload_status == "On" )
 {
 $sql_update_status="update control set upload=1 where id=1";
+echo "<br/>"."Upload is enabled";
 }
 elseif ($upload_status == "blank" )
 {
 $sql_update_status="select upload from control where id=1";
+echo "<br/>"."No value selected, previous value is retained";
 }
 elseif ($upload_status == "Off" )
 {
 $sql_update_status="update control set upload=0 where id=1";
+echo "<br/>"."Upload is diabled";
 }
 if ($link->query($sql_update_status) === TRUE) {
 //    echo "Record updated successfully";
