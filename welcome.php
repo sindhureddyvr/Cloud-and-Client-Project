@@ -3,11 +3,6 @@ session_start();
 $username = $_SESSION['login_user'];
 
 require 'vendor/autoload.php';
-<?php
-session_start();
-$username = $_SESSION['login_user'];
-
-require 'vendor/autoload.php';
 
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
@@ -133,7 +128,7 @@ elseif($value== "1") {
 }
 else{
 ?>
-<a href="gallery.php"> Gallery</a><br/><br/>
+<a href="gallery.php"> BackHome</a><br/><br/>
 <a href="index.php?logout=1" class="btn btn-primary"> Logout</a>
 <?php
 }
