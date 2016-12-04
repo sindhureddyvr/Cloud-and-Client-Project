@@ -1,4 +1,5 @@
 <?php
+
 require 'vendor/autoload.php';
 use Aws\Rds\RdsClient;
 $client = RdsClient::factory(array(
@@ -10,16 +11,16 @@ $result = $client->describeDBInstances(array(
 ));
 $endpoint = $result['DBInstances'][0]['Endpoint']['Address'];
 //print_r($endpoint);
-$res=exec('mysqldump --user=sreddy7 --password=sreddy123 --host='.$endpoint.' school -P 3306  > /tmp/backup.sql'
-);
-if($res=='')
-{
-$success = "Database backup is successfully saved at /tmp location";
-}
-else
-{
-}
+$restore_file  = "/tmp/backup.sql";
+$username      = "sreddy7";
+$password      = "sreddy123";
+$database_name = "school";
+
+$cmd = "mysql -h {$endpoint} -u {$username} -p{$password} {$database_name} < $restore_file";
+exec($cmd);
+
 ?>
+
 <html>
 <head>
 <meta charset="UTF-8">
@@ -34,9 +35,9 @@ else
     </style>
 </head>
 <body>
-<h2>Welcome to DB backup Page</h2><br/>
+<h2>Welcome to DB restore Page</h2><br/>
 <?php
-echo $success;
+echo "Restore successfull";
 echo "<br/>";
 ?>
 <br>

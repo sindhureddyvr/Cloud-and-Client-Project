@@ -13,7 +13,7 @@
     </style>
 </head>
 <body>
-<h1>Welcome,Admin </h1><br/>
+<h2>Welcome,Admin </h2><br/>
 <form action = "" method = "post">
 Image Upload
 <select name="upload_select_status">
@@ -25,8 +25,8 @@ Image Upload
 </form>
 <br>
 <br>
-<a href="backup.php"> BackupDB </a><br/><br/>
-
+<a href="backup.php"> BackupDB </a>
+<a href="restore.php">RestoreDB</a><br/><br/>
 <a href="welcome.php" class="btn btn-primary">BackToHome</a>
 
 <a href="index.php?logout=1" class="btn btn-primary"> Logout </a>
