@@ -63,7 +63,5 @@ aws sns delete-topic --topic-arn $ARN
 URL=`aws sqs get-queue-url --queue-name sreddy7 --query 'QueueUrl' | cut -d\" -f2`
 aws sqs delete-queue --queue-url $URL
 
-croninstance=$(aws ec2 describe-instances --query 'Reservations[].Instances[].[InstanceId]' --filters Name=instance-state-name,Values=running)
 
-aws ec2 terminate-instances --instance-ids $croninstance
 
