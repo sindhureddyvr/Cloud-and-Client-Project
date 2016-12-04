@@ -17,15 +17,19 @@ echo "Waiting until the instance is available"
 
 aws rds wait db-instance-available --db-instance-identifier sreddy7
 
-echo "MYSQL DB instance created"
+echo "Creating MYSQL DB instance"
 
 aws rds create-db-instance-read-replica --db-instance-identifier sreddy7-readreplica --source-db-instance-identifier sreddy7 
+
+echo "Waiting until the instance is available"
+
+aws rds wait db-instance-available --db-instance-identifier sreddy7-readreplica
 
 echo "Creating SNS Topic"
 
 aws sns create-topic --name sreddy7
 
-var =$(aws sns list-topics | cut -f 2)
+var=$(aws sns list-topics | cut -f 2)
 
 aws sns subscribe --topic-arn $var --protocol sms --notification-endpoint 1-312-561-8112
 
