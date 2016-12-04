@@ -12,8 +12,8 @@ ami-9469cff4 awskey sg-d5539bac webserver 1 developer itmo-544 webserverdemo
 
 c)	Index.php:
 
-usernames: sreddy7@hawk.iit.edu
-           hajek@iit.edu
+usernames: sreddy7@hawk.iit.edu /
+           hajek@iit.edu /
            controller
            
 Password for all the logins : password
