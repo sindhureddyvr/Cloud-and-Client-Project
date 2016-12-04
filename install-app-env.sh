@@ -17,7 +17,7 @@ echo "Waiting until the instance is available"
 
 aws rds wait db-instance-available --db-instance-identifier sreddy7
 
-echo "Creating MYSQL DB instance"
+echo "Creating MYSQL read replica"
 
 aws rds create-db-instance-read-replica --db-instance-identifier sreddy7-readreplica --source-db-instance-identifier sreddy7 
 
